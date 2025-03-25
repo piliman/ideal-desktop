@@ -5,3 +5,9 @@ Tired of spending long nights or entire days installing or reinstalling your wor
 I have been working in IT for 26 years. Over all these years, I have lost a lot of time installing or reinstalling my personal and professional workstations. Since discovering Ansible in 2012/2013, I have built a set of playbooks with the suite of tools I usually install on my Linux (Ubuntu) or macOS machines.
 
 This new version brings together all the work done over the years. No more manually installing your applications—just complete the variables and run the playbook!
+
+How to use it?
+    - Clone or fork this project
+    - Update with your requierements
+    - run the playbook using this command
+    ansible-playbook -i inventory.yml playbook.yml -K -e "ansible_user=$USER"
