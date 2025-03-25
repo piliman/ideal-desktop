@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+# UFW Configuration Template - Managed by Ansible
+# This file configures Uncomplicated Firewall (UFW) settings.
+
+# Enable IPv6 support (yes = enabled, no = only IPv6 loopback allowed)
+IPV6={{ ufw_ipv6 | default('no') }}
+
+# Default policies (ACCEPT, DROP, or REJECT)
+DEFAULT_INPUT_POLICY="{{ ufw_default_input_policy | default('DROP') }}"
+DEFAULT_OUTPUT_POLICY="{{ ufw_default_output_policy | default('ACCEPT') }}"
+DEFAULT_FORWARD_POLICY="{{ ufw_default_forward_policy | default('DROP') }}"
+DEFAULT_APPLICATION_POLICY="{{ ufw_default_application_policy | default('SKIP') }}"
+
+# UFW will manage built-in chains if set to 'yes' (Warning: May break manual rules)
+MANAGE_BUILTINS={{ ufw_manage_builtins | default('no') }}
+
+# IPT backend configuration
+IPT_SYSCTL=/etc/ufw/sysctl.conf
+
+# Extra connection tracking modules to load
+IPT_MODULES="{{ ufw_default_ipt_modules | default('nf_conntrack_ftp, nf_nat_ftp') }}"

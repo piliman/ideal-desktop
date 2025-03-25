@@ -1,0 +1,27 @@
+## Debian Multimedia Repo Setup
+# Managed by Ansible
+# Adds the Debian Multimedia repository for multimedia-related packages
+
+- name: Install Debian Multimedia Public Key
+  apt:
+    deb: http://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2016.8.1_all.deb
+  notify:
+    - Update apt cache
+
+- name: Add Debian Multimedia Repo
+  become: True
+  apt_repository:
+    repo: deb https://www.deb-multimedia.org stable main non-free
+    filename: 'debian-multimedia'
+    state: present
+    update_cache: yes
+  notify:
+    - Update apt cache
+
+# Handlers
+
+- name: Update apt cache
+  become: True
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600  # Cache valid for 1 hour to avoid frequent updates

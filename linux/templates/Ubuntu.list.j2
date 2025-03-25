@@ -1,0 +1,10 @@
+## Ubuntu APT sources list
+# Managed by Ansible
+# Distribution: {{ ansible_distribution }} {{ ansible_distribution_release }}
+
+deb https://fr.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} main universe restricted multiverse
+deb https://fr.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-updates main universe restricted multiverse
+deb https://fr.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-security main universe restricted multiverse
+
+deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} partner
+deb https://fr.archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }}-backports main restricted universe multiverse

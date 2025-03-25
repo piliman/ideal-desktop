@@ -1,0 +1,127 @@
+---
+# tasks file for mac
+- name: Check if Homebrew is installed
+  ansible.builtin.command: which brew
+  register: brew_check
+  ignore_errors: yes
+
+- name: Install Homebrew if missing
+  ansible.builtin.shell: "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+  when: brew_check.rc != 0
+
+- name: Install htop and git using Homebrew
+  community.general.homebrew:
+    name:
+      - htop
+      - git
+      - ansible
+      - exiftool
+      - awscli
+      - ca-certificates
+      - irssi
+      - xz
+      - curl
+      - curl-openssl
+      - openvpn
+    state: present
+
+- name: Add the Homebrew tap for Ferdium
+  community.general.homebrew_tap:
+    name: ferdium/ferdium
+    state: present
+
+- name: Install applications using Homebrew Cask
+  community.general.homebrew_cask:
+    name:
+      - android-studio
+      - balenaetcher
+      - chromium
+      - cisco-packet-tracer
+      - darktable
+      - deezer
+      - docker
+      - ferdium
+      - filezilla
+      - firefox
+      - flutter
+      - freecad
+      - gimp
+      - google-chrome
+      - google-drive
+      - istat-menus
+      - libreoffice
+      - musescore
+      - openvpn-connect
+      - rawtherapee
+      - sketchup
+      - slack
+      - telegram
+      - thunderbird
+      - tor-browser
+      - tunnelblick
+      - vlc
+      - visual-studio-code
+      - whatsapp
+      - xcode
+    state: present
+
+# FreeTube Installation (via ZIP)
+- name: Download FreeTube
+  get_url:
+    url: "https://github.com/FreeTubeApp/FreeTube/releases/latest/download/FreeTube-mac.zip"
+    dest: "/tmp/FreeTube-mac.zip"
+
+- name: Extract FreeTube
+  unarchive:
+    src: "/tmp/FreeTube-mac.zip"
+    dest: "/Applications/"
+    remote_src: yes
+
+- name: Remove the ZIP file
+  file:
+    path: "/tmp/FreeTube-mac.zip"
+    state: absent
+
+# Family Tree Builder Installation
+- name: Check if Family Tree Builder is already installed
+  stat:
+    path: /Applications/Family\ Tree\ Builder.app
+  register: family_tree_installed
+
+- name: Display a message if Family Tree Builder is already installed
+  debug:
+    msg: "Family Tree Builder is already installed."
+  when: family_tree_installed.stat.exists
+
+- name: Download Family Tree Builder if not installed
+  get_url:
+    url: "https://www.myheritagefiles.com/download/Software/FamilyTreeBuilder-8.0.0.dmg"
+    dest: "/tmp/FamilyTreeBuilder.dmg"
+  when: not family_tree_installed.stat.exists
+
+- name: Mount the disk image
+  command: hdiutil attach /tmp/FamilyTreeBuilder.dmg -nobrowse
+  register: hdiutil_output
+  changed_when: "'/Volumes/Family Tree Builder' in hdiutil_output.stdout"
+  when: not family_tree_installed.stat.exists
+
+- name: Copy the application to /Applications
+  command: cp -R "/Volumes/Family Tree Builder/Family Tree Builder.app" /Applications/
+  when: not family_tree_installed.stat.exists
+
+- name: Unmount the disk image
+  command: hdiutil detach "/Volumes/Family Tree Builder"
+  when: not family_tree_installed.stat.exists
+
+- name: Remove the DMG file
+  file:
+    path: "/tmp/FamilyTreeBuilder.dmg"
+    state: absent
+  when: not family_tree_installed.stat.exists
+
+# Synology Drive Client Installation (manual)
+- name: Display a message for manual installation
+  debug:
+    msg: |
+      Please download and manually install Synology Drive Client from:
+      https://www.synology.com/fr-fr/support/download

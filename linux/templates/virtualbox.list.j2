@@ -1,0 +1,6 @@
+## VirtualBox APT repository
+# Managed by Ansible
+# VirtualBox Repository for {{ ansible_distribution }} {{ ansible_distribution_release }}
+
+# Add the VirtualBox package repository
+deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib

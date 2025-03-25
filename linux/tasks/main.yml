@@ -1,0 +1,50 @@
+- name: Include OS-specific vars
+  ansible.builtin.include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Configure APT sources.list
+  ansible.builtin.template:
+    src: "{{ ansible_distribution }}.list.j2"
+    dest: /etc/apt/sources.list
+  when: ansible_os_family == 'Debian'
+  notify: apt update
+
+# Include repositories configurations
+- name: Add external repositories
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_items:
+    - google-repo.yml
+    - opera-repo.yml
+    - vivaldi-repo.yml
+    - microsoft-repo.yml
+    - debian-multimedia-repo.yml
+    - debian-backports-repo.yml
+    - skype-repo.yml
+    - docker-ce-repo.yml
+    - virtualbox-repo.yml
+  when: ansible_os_family == 'Debian'
+  notify: apt update
+
+- name: Install system packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ common_packages }}"
+    state: latest
+
+- name: Configure firewall
+  ansible.builtin.template:
+    src: ufw.j2
+    dest: /etc/default/ufw
+    owner: root
+    group: root
+    mode: '0644'
+  notify: reload ufw
+
+- name: Install Python packages via pip
+  ansible.builtin.pip:
+    name: "{{ common_pip_packages }}"
+
+- name: Include additional configurations
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_items:
+    - docker-container-images.yml
+    - text2speech.yml

@@ -1,0 +1,8 @@
+- name: Install text 2 Speech
+  become: True
+  package:
+    name:
+        - espeak-ng
+        - espeak-ng-espeak
+        - espeakedit
+    state: latest

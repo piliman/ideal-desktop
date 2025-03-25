@@ -1,0 +1,28 @@
+## Microsoft Repo Setup
+# Managed by Ansible
+# Adds the Microsoft repository for Visual Studio Code and other Microsoft packages
+
+- name: Install Microsoft Public Key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  notify:
+    - Update apt cache
+
+- name: Add Microsoft Repo
+  become: True
+  apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+    filename: 'microsoft-stable'
+    state: present
+    update_cache: yes
+  notify:
+    - Update apt cache
+
+# Handlers
+
+- name: Update apt cache
+  become: True
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600  # Cache valid for 1 hour to avoid frequent updates

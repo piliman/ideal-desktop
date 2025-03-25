@@ -1,0 +1,227 @@
+# vars file for linux (Ubuntu)
+
+common_packages:
+  - htop
+  - git
+  - tasksel
+  - apt-clone
+  - apt-file
+  - aptitude
+  - synaptic
+  - aptitude-robot
+  - apt-utils
+  - apt-transport-https
+  - debian-archive-keyring
+  - ca-certificates
+  - software-properties-common
+  - ufw
+  - ansible
+  - virtualbox
+  - docker-ce
+  - python3
+  - python3-pip
+  - lynx
+  - plymouth
+  - curl
+  - wget
+  - nano
+  - vim
+  - network-manager
+  - net-tools
+
+common_pip_packages:
+  - vpn-slice
+  - awscli
+  - boto3
+
+---
+# vars file for system
+# APT or common.
+#  - ca-certificates
+#  - software-properties-common
+
+common_firewall:
+  - ufw
+  - gufw
+
+# list of rules for UFW
+# list of profiles located in /etc/ufw/applications.d
+ufw_applications: []
+# /etc/defaut/ufw settings
+ufw_ipv6: "yes"
+ufw_default_input_policy: DROP
+ufw_default_output_policy: ACCEPT
+ufw_default_forward_policy: DROP
+ufw_default_application_policy: SKIP
+ufw_default_ipt_modules: "nf_conntrack_ftp nf_nat_ftp nf_conntrack_netbios_ns"
+# firewall state: enabled | disabled
+ufw_state: enabled
+ufw_logging: "off"
+# always reset the firewall
+ufw_reset: yes
+
+common_antivirus_tools:
+  - clamav
+  - clamav-base
+  - clamav-daemon
+  - clamav-freshclam
+  - clamav-testfiles
+  - clamdscan
+  - clamtk
+  - clamtk-gnome
+#  - clamtk-nautilus # Non disponible sous Ubuntu
+
+common_shells_tools:
+  - htop
+  - putty
+  - curl
+  - mlocate
+  - screen
+  - minicom
+  - gnupg2
+  - mssh
+  - bash-completion
+  - clusterssh
+  - command-not-found
+  - sudo
+  - rsync
+  - lshw
+  - sysstat
+  - ifstat
+  - iotop
+  - mtr
+  - gawk
+  - dstat
+
+common_vim:
+  - vim
+
+common_ansible_tools:
+  - ansible-tower-cli
+
+common_crypt_tools:
+  - cryptmount
+  - cryptsetup
+
+common_irssi_tools:
+  - irssi
+  - irssi-plugin-otr
+  - irssi-plugin-robustirc
+  - irssi-plugin-xmpp
+  - irssi-scripts
+
+common_plymouth:
+  - plymouth
+  - plymouth-themes
+  - plymouth-theme-hamara
+
+common_compression_tools:
+  - unace
+  - unrar-free
+  - pigz
+
+common_xmlint:
+  - libxml2-utils
+
+common_lynx:
+  - lynx
+
+common_mount_tools:
+  - cifs-utils
+  - smbnetfs
+
+common_docker:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-compose
+
+
+common_network_diagtools:
+  - nmap
+  - ngrep
+  - nmapsi4
+  - wget
+  - aria2
+  - mosh
+  - traceroute
+  - tcptraceroute
+  - tcpdump
+  - wireshark
+  - wireshark-gtk
+  - wireshark-qt
+  - gnome-shell-extension-hide-veth
+  - network-manager-openvpn
+  - network-manager-openvpn-gnome
+  - network-manager-fortisslvpn
+  - network-manager-fortisslvpn-gnome
+  - network-manager-iodine
+  - network-manager-iodine-gnome
+  - network-manager-l2tp
+  - network-manager-l2tp-gnome
+  - network-manager-openconnect
+  - network-manager-openconnect-gnome
+  - network-manager-pptp
+  - network-manager-pptp-gnome
+  - network-manager-ssh
+  - network-manager-ssh-gnome
+  - network-manager-strongswan
+  - network-manager-vpnc
+  - network-manager-vpnc-gnome
+  - strongswan-nm
+  - openvpn
+  - openvpn-systemd-resolved
+  - whois
+  - dnsutils
+  - fwbuilder
+  - ipcalc
+  - sipcalc
+  - mtr
+  - iftop
+  - speedtest-cli
+  - openfortivpn
+  - charon-cmd
+  - libcharon-extra-plugins
+  - libcharon-standard-plugins
+  - strongswan-charon
+  - iperf3
+  - openfortivpn
+  #- snort
+  #- snort-doc
+  #- snort-rules-default
+
+common_virt_manager:
+  - virt-manager
+
+common_virtualbox:
+  - virtualbox
+
+common_openstack_client:
+  - python3-aodhclient
+  - python3-gnocchiclient
+  - python3-barbicanclient
+  - python3-ceilometerclient
+  - python3-cinderclient
+  - python3-designateclient
+  - python3-glanceclient
+  - python3-heatclient
+  - python3-keystoneclient
+  - python3-muranoclient
+  - python3-neutronclient
+  - python3-novaclient
+  - python3-openstackclient
+
+common_git_client:
+  - git
+  - tig
+
+common_awscli:
+  - awscli
+
+common_python:
+  - python3-pip
+  - python-is-python3
+  - python3-docker
+
+container_images:
+  - vault

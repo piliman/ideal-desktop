@@ -1,0 +1,20 @@
+## Opera Browser Repo Setup
+# Managed by Ansible
+# Adds the Opera browser repository
+
+- name: Install Opera Public Key
+  apt_key:
+    url: https://deb.opera.com/archive.key
+    state: present
+  notify:
+    - Update apt cache
+
+- name: Add Opera Repo
+  become: True
+  apt_repository:
+    repo: deb https://deb.opera.com/opera-stable/ stable non-free
+    filename: 'opera-stable'
+    state: present
+    update_cache: yes
+  notify:
+    - Update apt cache
