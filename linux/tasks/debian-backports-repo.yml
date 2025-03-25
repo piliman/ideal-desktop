@@ -1,0 +1,16 @@
+## Debian Backports Repo Setup
+# Managed by Ansible
+# Adds the Debian Backports repository
+
+- name: Download Debian Backports GPG Key
+  get_url:
+    url: https://ftp-master.debian.org/keys/archive-key-11.asc
+    dest: /etc/apt/keyrings/debian-backports-key.asc
+    mode: '0644'
+
+- name: Add Debian Backports repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/debian-backports-key.asc] http://deb.debian.org/debian bookworm-backports main contrib non-free"
+    state: present
+  notify:
+    - Update apt cache

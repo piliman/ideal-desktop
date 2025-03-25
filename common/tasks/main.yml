@@ -10,5 +10,3 @@
     dest: "/home/{{ ansible_user }}/.gitconfig"
     owner: "{{ ansible_user }}"
     mode: '0644'
-    become: True
-    become_user: "{{ ansible_user }}"

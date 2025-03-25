@@ -2,19 +2,16 @@
 # Managed by Ansible
 # Adds the Opera browser repository
 
-- name: Install Opera Public Key
-  apt_key:
+- name: Download Opera GPG Key
+  get_url:
     url: https://deb.opera.com/archive.key
-    state: present
-  notify:
-    - Update apt cache
+    dest: /etc/apt/keyrings/opera.asc
+    mode: '0644'
 
-- name: Add Opera Repo
-  become: True
+- name: Add Opera repository
   apt_repository:
-    repo: deb https://deb.opera.com/opera-stable/ stable non-free
-    filename: 'opera-stable'
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/opera.asc] https://deb.opera.com/opera-stable/ stable non-free"
+    filename: 'opera'
     state: present
-    update_cache: yes
   notify:
     - Update apt cache

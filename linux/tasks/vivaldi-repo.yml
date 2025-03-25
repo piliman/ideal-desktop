@@ -2,19 +2,16 @@
 # Managed by Ansible
 # Adds the Vivaldi browser repository
 
-- name: Install Vivaldi Public Key
-  apt_key:
-    url: http://repo.vivaldi.com/stable/linux_signing_key.pub
-    state: present
-  notify:
-    - Update apt cache
+- name: Download Vivaldi GPG Key
+  get_url:
+    url: https://repo.vivaldi.com/stable/linux_signing_key.pub
+    dest: /etc/apt/keyrings/vivaldi.asc
+    mode: '0644'
 
-- name: Add Vivaldi Repo
-  become: True
+- name: Add Vivaldi repository
   apt_repository:
-    repo: deb http://repo.vivaldi.com/stable/deb/ stable main
-    filename: 'vivaldi-stable'
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/vivaldi.asc] http://repo.vivaldi.com/stable/deb stable main"
+    filename: 'vivaldi'
     state: present
-    update_cache: yes
   notify:
     - Update apt cache

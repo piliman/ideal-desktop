@@ -2,19 +2,16 @@
 # Managed by Ansible
 # Adds the VirtualBox repository and installs VirtualBox
 
-- name: Install VirtualBox Public Key
-  apt_key:
-    url: https://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
-    state: present
-  notify:
-    - Update apt cache
+- name: Download VirtualBox GPG Key
+  get_url:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    dest: /etc/apt/keyrings/virtualbox.asc
+    mode: '0644'
 
-- name: Add VirtualBox Repo
-  become: True
+- name: Add VirtualBox repository
   apt_repository:
-    repo: deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/virtualbox.asc] https://download.virtualbox.org/virtualbox/debian jammy contrib"
     filename: 'virtualbox'
     state: present
-    update_cache: yes
   notify:
     - Update apt cache

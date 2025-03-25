@@ -2,27 +2,24 @@
 # Managed by Ansible
 # Adds the Microsoft repository for Visual Studio Code and other Microsoft packages
 
-- name: Install Microsoft Public Key
-  apt_key:
+- name: Download Microsoft GPG Key
+  get_url:
     url: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
-  notify:
-    - Update apt cache
+    dest: /etc/apt/keyrings/microsoft.asc
+    mode: '0644'
 
-- name: Add Microsoft Repo
-  become: True
+- name: Add Microsoft repository for VS Code
   apt_repository:
-    repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
-    filename: 'microsoft-stable'
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft.asc] https://packages.microsoft.com/repos/vscode stable main"
+    filename: 'microsoft'
     state: present
-    update_cache: yes
   notify:
     - Update apt cache
 
-# Handlers
-
-- name: Update apt cache
-  become: True
-  apt:
-    update_cache: yes
-    cache_valid_time: 3600  # Cache valid for 1 hour to avoid frequent updates
+- name: Add Microsoft repository for Teams
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft.asc] https://packages.microsoft.com/repos/ms-teams stable main"
+    filename: 'microsoft'
+    state: present
+  notify:
+    - Update apt cache

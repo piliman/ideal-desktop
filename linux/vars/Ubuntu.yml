@@ -34,7 +34,6 @@ common_pip_packages:
   - awscli
   - boto3
 
----
 # vars file for system
 # APT or common.
 #  - ca-certificates

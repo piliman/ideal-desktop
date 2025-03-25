@@ -1,2 +1,7 @@
 ---
 # vars file for common
+
+git_user_name: "Vincent Aaron"
+git_user_email: "piliman974@gmail.com"
+git_user_username: "piliman"
+github_user: "piliman"

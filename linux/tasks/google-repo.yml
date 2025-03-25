@@ -2,29 +2,24 @@
 # Managed by Ansible
 # Adds Google Chrome and Google Earth repositories
 
-- name: Install Google Public Key
-  apt_key:
+- name: Download Google Chrome GPG Key
+  get_url:
     url: https://dl.google.com/linux/linux_signing_key.pub
-    state: present
-  notify:
-    - Update apt cache
+    dest: /etc/apt/keyrings/google.asc
+    mode: '0644'
 
-- name: Add Google Chrome Repo
-  become: True
+- name: Add Google Chrome repository
   apt_repository:
-    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-    filename: 'google-chrome-stable'
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/google.asc] http://dl.google.com/linux/chrome/deb/ stable main"
+    filename: 'google'
     state: present
-    update_cache: yes
   notify:
     - Update apt cache
 
 - name: Add Google Earth Repo
-  become: True
   apt_repository:
-    repo: deb [arch=amd64] http://dl.google.com/linux/earth/deb/ stable main
-    filename: 'google-earth-stable'
+    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/google.asc] http://dl.google.com/linux/earth/deb/ stable main
+    filename: 'google'
     state: present
-    update_cache: yes
   notify:
     - Update apt cache
