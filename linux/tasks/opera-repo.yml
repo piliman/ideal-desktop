@@ -3,12 +3,14 @@
 # Adds the Opera browser repository
 
 - name: Download Opera GPG Key
+  become: true
   get_url:
     url: https://deb.opera.com/archive.key
     dest: /etc/apt/keyrings/opera.asc
     mode: '0644'
 
 - name: Add Opera repository
+  become: true
   apt_repository:
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/opera.asc] https://deb.opera.com/opera-stable/ stable non-free"
     filename: 'opera'

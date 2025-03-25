@@ -3,12 +3,14 @@
 # Adds the Vivaldi browser repository
 
 - name: Download Vivaldi GPG Key
+  become: true
   get_url:
     url: https://repo.vivaldi.com/stable/linux_signing_key.pub
     dest: /etc/apt/keyrings/vivaldi.asc
     mode: '0644'
 
 - name: Add Vivaldi repository
+  become: true
   apt_repository:
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/vivaldi.asc] http://repo.vivaldi.com/stable/deb stable main"
     filename: 'vivaldi'

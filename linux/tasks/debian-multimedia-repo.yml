@@ -3,6 +3,7 @@
 # Adds the Debian Multimedia repository for multimedia-related packages
 
 - name: Install Debian Multimedia Public Key
+  become: true
   apt:
     deb: http://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2016.8.1_all.deb
   notify:

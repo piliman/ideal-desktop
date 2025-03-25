@@ -3,12 +3,14 @@
 # Adds the VirtualBox repository and installs VirtualBox
 
 - name: Download VirtualBox GPG Key
+  become: true
   get_url:
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
     dest: /etc/apt/keyrings/virtualbox.asc
     mode: '0644'
 
 - name: Add VirtualBox repository
+  become: true
   apt_repository:
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/virtualbox.asc] https://download.virtualbox.org/virtualbox/debian jammy contrib"
     filename: 'virtualbox'

@@ -2,6 +2,7 @@
   ansible.builtin.include_vars: "{{ ansible_distribution }}.yml"
 
 - name: Configure APT sources.list
+  become: true
   ansible.builtin.template:
     src: "{{ ansible_distribution }}.list.j2"
     dest: /etc/apt/sources.list
@@ -9,6 +10,7 @@
   notify: Update apt cache
 
 - name: Ensure directory for keyrings exists
+  become: true
   file:
     path: /etc/apt/keyrings
     state: directory
@@ -16,6 +18,7 @@
 
 # Include repositories configurations
 - name: Add external repositories
+  become: true
   ansible.builtin.include_tasks: "{{ item }}"
   with_items:
     - google-repo.yml
@@ -35,6 +38,7 @@
     state: latest
 
 - name: Configure firewall
+  become: true
   ansible.builtin.template:
     src: ufw.j2
     dest: /etc/default/ufw
@@ -44,10 +48,12 @@
   notify: reload ufw
 
 - name: Install Python packages via pip
+  become: true
   ansible.builtin.pip:
     name: "{{ common_pip_packages }}"
 
 - name: Include additional configurations
+  become: true
   ansible.builtin.include_tasks: "{{ item }}"
   with_items:
   #  - docker-container-images.yml

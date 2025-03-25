@@ -3,6 +3,7 @@
 # Adds the Docker repository Docker CE (Community Edition)
 
 - name: Download Docker GPG Key
+  become: true
   get_url:
     url: https://download.docker.com/linux/ubuntu/gpg
     dest: /etc/apt/keyrings/docker.asc
