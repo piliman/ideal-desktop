@@ -1,6 +1,5 @@
 - name: Install common system applications
   hosts: localhost
-  become: yes
   roles:
     - common
     - { role: linux, when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" }
