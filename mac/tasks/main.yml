@@ -62,6 +62,7 @@
       - vlc
       - visual-studio-code
       - whatsapp
+      - android-platform-tools
       - xcode
     state: present
 
