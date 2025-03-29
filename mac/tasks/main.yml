@@ -63,6 +63,7 @@
       - visual-studio-code
       - whatsapp
       - android-platform-tools
+      - firebase-cli
       - xcode
     state: present
 
